@@ -20,7 +20,7 @@ let login = async (req, res) => {
 
     if (response) {
       let token = await tokenGeneration(existingUser); // genertaing the token
-      let option = { httpOnly: true, secure: true  , sameSite: 'None',};
+      let option = { httpOnly: true, secure: true, sameSite: "None" };
 
       return res.status(201).cookie("Token", token, option).send({
         result: true,
@@ -51,7 +51,7 @@ let signup = async (req, res) => {
     let user = await newUser.save(); // saving the new user
 
     let token = await tokenGeneration(user); // generating the token
-    let option = { httpOnly: true, secure: true  , sameSite: 'None',}; // options for cokkies
+    let option = { httpOnly: true, secure: true, sameSite: "None" }; // options for cokkies
     return res
 
       .cookie("Token", token, option)
@@ -72,15 +72,13 @@ let getuser = (req, res) => {
 };
 
 let updateuser = async (req, res) => {
-
-  console.log("Update is running ")
+  console.log("Update is running ");
   if (!req.user) {
     return res.send({ result: false, message: "Plese login " });
   }
 
   try {
     let user = req.user;
-
 
     let { _id } = user;
 
@@ -105,7 +103,11 @@ let logout = async (req, res) => {
 
   try {
     return res
-      .clearCookie("Token")
+      .clearCookie("Token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+      })
       .send({ result: true, message: "userLogout succesfully " });
   } catch (err) {
     return res.send({ result: false, message: err.message });

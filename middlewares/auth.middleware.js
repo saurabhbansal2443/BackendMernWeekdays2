@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../model/user.model.js";
 
 let auth = async (req, res, next) => {
-  let token = req.cookies?.Token;
+  let token = req.cookies?.Token || req.header('Authorization')?.replace('Bearer ' , "");
 
   try {
     if (!token) {

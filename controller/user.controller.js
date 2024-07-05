@@ -20,7 +20,7 @@ let login = async (req, res) => {
 
     if (response) {
       let token = await tokenGeneration(existingUser); // genertaing the token
-      let option = { httpOnly: true, secure: true };
+      let option = { httpOnly: true, secure: true  , sameSite: 'None',};
 
       return res.status(201).cookie("Token", token, option).send({
         result: true,
@@ -51,7 +51,7 @@ let signup = async (req, res) => {
     let user = await newUser.save(); // saving the new user
 
     let token = await tokenGeneration(user); // generating the token
-    let option = { httpOnly: true, secure: true }; // options for cokkies
+    let option = { httpOnly: true, secure: true  , sameSite: 'None',}; // options for cokkies
     return res
 
       .cookie("Token", token, option)
